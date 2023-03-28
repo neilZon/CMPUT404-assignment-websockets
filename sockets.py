@@ -14,7 +14,7 @@
 # limitations under the License.
 #
 import flask
-from flask import Flask, request
+from flask import Flask, request, url_for, redirect
 from flask_sockets import Sockets
 import gevent
 from gevent import queue
@@ -69,19 +69,35 @@ myWorld.add_set_listener( set_listener )
 @app.route('/')
 def hello():
     '''Return something coherent here.. perhaps redirect to /static/index.html '''
-    return None
+    return redirect(url_for('static', filename='./index.html'))
 
 def read_ws(ws,client):
     '''A greenlet function that reads from the websocket and updates the world'''
     # XXX: TODO IMPLEMENT ME
+    # myWorld.update(entity, key, value)
     return None
+
+clients = []
 
 @sockets.route('/subscribe')
 def subscribe_socket(ws):
     '''Fufill the websocket URL of /subscribe, every update notify the
        websocket and read updates from the websocket '''
-    # XXX: TODO IMPLEMENT ME
-    return None
+    clients.append(ws)
+    while not ws.closed:
+        message = ws.receive()
+        if message is not None:
+            message_dict = json.loads(message)
+            print(message_dict)
+
+            for k, v in message_dict.items():
+                myWorld.set(k, v)
+
+            # update everyone except sender
+            for client in clients:
+                if ws != client:
+                    # print(len(clients))
+                    client.send(message)
 
 
 # I give this to you, this is how you get the raw body/data portion of a post in flask
@@ -115,6 +131,7 @@ def get_entity(entity):
 @app.route("/clear", methods=['POST','GET'])
 def clear():
     '''Clear the world out!'''
+    myWorld.clear()
     return None
 
 
