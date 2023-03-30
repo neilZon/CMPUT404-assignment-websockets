@@ -62,6 +62,7 @@ class WorldClient(WebSocketClient):
         print("Sent %s" % entity)
 
     def closed(self, code, reason):
+        print(self)
         print(("Closed down %s " % self.name, code, reason))
 
     def receive_my_message(self,m):

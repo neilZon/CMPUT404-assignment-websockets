@@ -86,9 +86,10 @@ def subscribe_socket(ws):
     clients.append(ws)
     while not ws.closed:
         message = ws.receive()
+        print("message", message)
         if message is not None:
             message_dict = json.loads(message)
-            print(message_dict)
+            # print(message_dict)
 
             for k, v in message_dict.items():
                 myWorld.set(k, v)
@@ -98,6 +99,9 @@ def subscribe_socket(ws):
                 if ws != client:
                     # print(len(clients))
                     client.send(message)
+        else:
+            ws.close()
+            return
 
 
 # I give this to you, this is how you get the raw body/data portion of a post in flask
