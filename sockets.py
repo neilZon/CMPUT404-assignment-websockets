@@ -86,7 +86,7 @@ def subscribe_socket(ws):
     clients.append(ws)
     while not ws.closed:
         message = ws.receive()
-        print("message", message)
+        # print("message", message)
         if message is not None:
             message_dict = json.loads(message)
             # print(message_dict)
@@ -94,11 +94,10 @@ def subscribe_socket(ws):
             for k, v in message_dict.items():
                 myWorld.set(k, v)
 
-            # update everyone except sender
-            for client in clients:
-                if ws != client:
-                    # print(len(clients))
-                    client.send(message)
+            # update everyone except sender jk
+            for client in clients: 
+
+                client.send(message)
         else:
             ws.close()
             return
