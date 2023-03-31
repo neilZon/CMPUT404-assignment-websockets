@@ -180,7 +180,7 @@
               var y = pos[1];
               self.clicked = 1;
               self.callListeners(self.mousedowners, x, y, self.clicked, e);
-              //addEntityWithoutName({'x':x,'y':y,'colour':'red'});
+              // addEntityWithoutName({ x: x, y: y, colour: 'EC368D' });
             }
           },
           mouseup: function (e) {
@@ -194,7 +194,7 @@
               self.clicked = 0;
               self.selected = -1;
               self.callListeners(self.mouseuppers, x, y, self.clicked, e);
-              //addEntityWithoutName({'x':x,'y':y,'colour':'blue'});
+              // addEntityWithoutName({ x: x, y: y, colour: '#3a243b' });
             }
           },
           touchstart: function (e) {
@@ -241,15 +241,15 @@
       // Add the application specific mouse listeners!
       //XXX: TODO Make these prettier!
       mouse.mousedowners.push(function (x, y, clicked, e) {
-        addEntityWithoutName({ x: x, y: y, colour: 'blue' });
+        addEntityWithoutName({ x: x, y: y, colour: '#FF595E' });
       });
 
       mouse.mouseuppers.push(function (x, y, clicked, e) {
-        addEntityWithoutName({ x: x, y: y, colour: 'red' });
+        addEntityWithoutName({ x: x, y: y, colour: '#6E44FF' });
       });
 
       mouse.mousedraggers.push(function (x, y, clicked, e) {
-        addEntityWithoutName({ x: x, y: y, colour: 'green', radius: 10 });
+        addEntityWithoutName({ x: x, y: y, colour: '#1EFFBC', radius: 10 });
       });
 
       function update() {

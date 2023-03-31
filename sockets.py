@@ -101,6 +101,7 @@ def subscribe_socket(ws):
         else:
             ws.close()
             return
+    clients.remove(client)
 
 
 # I give this to you, this is how you get the raw body/data portion of a post in flask
